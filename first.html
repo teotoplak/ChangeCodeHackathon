@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>First</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <form>
+            <div class="form-group">
+                Teamname <input class="form-control" type="text" name="Teamname">
+                Password <input class="form-control" type="text" name="Password">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h4>Add member</h4>
+        <form>
+            <div class="form-group">
+                Name <input type="text" class="form-control" id="name" name="name">
+                Surname <input type="text" class="form-control" id="surname" name="surname">
+                Email <input type="text" class="form-control" id="mail" name="mail">
+            </div>
+            <button class="btn btn-default" id="addMember">Add member</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h4>Added members</h4>
+        <div id="membersList"></div>
+        <button class="btn btn-default" id="send">Submit the team</button>
+    </div>
+</div>
+
+<script>
+
+    let members = [];
+
+    $("#addMember").click((e) => {
+        e.preventDefault();
+        let name = document.getElementById("name");
+        let surname = name = document.getElementById("surname");
+        let email = name = document.getElementById("mail");
+        members.push({
+            name: name.value,
+            surname: surname.value,
+            email: email.value
+        });
+
+        document.getElementById("membersList").innerHTML += `Name: ${name.value} Surname: ${surname.value} Email:${email.value} <br>`
+
+    });
+
+    $("#send").click((e) => {
+        e.preventDefault();
+        let json = {
+            Teamname : "The_Brogrammers",
+            Password : "SuperKulPass123#",
+            Members : members
+        };
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(json),
+            url: "http://52.233.158.172/change/api/en/account/register",
+            success: (result) => {
+                console.log(result);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
