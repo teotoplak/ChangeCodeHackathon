@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>First</title>
+    <title>Second</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Latest compiled and minified CSS -->
@@ -23,55 +23,27 @@
 </div>
 <div class="row">
     <div class="col-md-6 col-md-offset-1">
+        <h3>Login</h3>
         <form>
             <div class="form-group">
-                Teamname <input class="form-control" id="teamname" type="text" name="Teamname">
-                Password <input class="form-control" id="password" type="text" name="Password">
+                Teamname <input class="form-control" id="teamname" type="text" name="Teamname" value="The_Brogrammers">
+                Password <input class="form-control" id="password" type="text" name="Password" value="SuperKulPass123#">
             </div>
+            <button id="login" class="btn btn-default">Login</button>
         </form>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-6 col-md-offset-1">
-        <h4>Add member</h4>
-        <form>
-            <div class="form-group">
-                Name <input type="text" class="form-control" id="name" name="name">
-                Surname <input type="text" class="form-control" id="surname" name="surname">
-                Email <input type="text" class="form-control" id="mail" name="mail">
-            </div>
-            <button class="btn btn-default" id="addMember">Add member</button>
-        </form>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-md-offset-1">
-        <h4>Added members</h4>
-        <div id="membersList"></div>
-        <button class="btn btn-default" id="send">Submit the team</button>
+        <h4>Result</h4>
+       <div id="token"></div>
     </div>
 </div>
 
 <script>
 
-    let members = [];
-
-    $("#addMember").click((e) => {
-        e.preventDefault();
-        let name = document.getElementById("name");
-        let surname = name = document.getElementById("surname");
-        let email = name = document.getElementById("mail");
-        members.push({
-            name: name.value,
-            surname: surname.value,
-            email: email.value
-        });
-
-        document.getElementById("membersList").innerHTML += `Name: ${name.value} Surname: ${surname.value} Email:${email.value} <br>`
-
-    });
-
-    $("#send").click((e) => {
+    $("#login").click((e) => {
         e.preventDefault();
         let teamname = document.getElementById("teamname");
         let password = document.getElementById("password");
@@ -79,15 +51,17 @@
         let json = {
             Teamname : teamname.value,
             Password : password.value,
-            Members : members
         };
+
         $.ajax({
             type: "POST",
             contentType: 'application/json',
+            crossDomain: true,
             data: JSON.stringify(json),
-            url: "http://52.233.158.172/change/api/en/account/register",
+            url: "http://52.233.158.172/change/api/en/account/login",
             success: (result) => {
                 console.log(result);
+                document.getElementById("token").innerHTML = result.Result
             }
         });
     });
