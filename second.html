@@ -45,12 +45,17 @@
 
     $("#login").click((e) => {
         e.preventDefault();
-        let teamname = document.getElementById("teamname");
-        let password = document.getElementById("password");
+        let teamname = document.getElementById("teamname").value;
+        let password = document.getElementById("password").value;
+
+        if(!teamname || !password) {
+            alert("Please fill out all the fields!");
+            return;
+        }
 
         let json = {
-            Teamname : teamname.value,
-            Password : password.value,
+            Teamname : teamname,
+            Password : password,
         };
 
         $.ajax({

@@ -73,12 +73,18 @@
 
     $("#send").click((e) => {
         e.preventDefault();
-        let teamname = document.getElementById("teamname");
-        let password = document.getElementById("password");
+
+        let teamname = document.getElementById("teamname").value;
+        let password = document.getElementById("password").value;
+
+        if (members.length == 0 || !teamname || !password) {
+            alert("Please fill out all the fields!");
+            return
+        }
 
         let json = {
-            TeamName : teamname.value,
-            Password : password.value,
+            TeamName : teamname,
+            Password : password,
             Members : members
         };
         $.ajax({
